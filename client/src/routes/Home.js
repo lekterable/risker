@@ -55,12 +55,12 @@ class Home extends Component {
     return (
       <div className='main'>
         <div className='form-group row'>
-          <label className='col-3 col-form-label text-center'>My ID:</label>
-          <div className='col-9'><input className='form-control text-center' type='text' readOnly value={this.props.socket.id || ''}/></div>
+          <label className='col-3 offset-md-3 col-md-2 offset-lg-4 col-lg-1 col-form-label text-center'>My ID:</label>
+          <div className='col-9 col-md-5 col-lg-3'><input className='form-control text-center' type='text' readOnly value={this.props.socket.id || ''}/></div>
         </div>
         <div className='players-list row'>
           <div className='text-center col-12'>Players:</div>
-          <div className='col-12'>
+          <div className='col-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4'>
             <ul className='list-group'>
               {players}
             </ul>
@@ -68,7 +68,7 @@ class Home extends Component {
         </div>
         <div className='invite-form row'>
           <div className='col-12 text-center'>
-            <input className='form-control text-center col-8 offset-2' placeholder='Insert ID' type='text' value={this.state.opponent} onChange={(e) => this.setState({opponent: e.target.value})}/>
+            <input className='form-control text-center col-8 offset-2 col-md-4 offset-md-4' placeholder='Insert ID' type='text' value={this.state.opponent} onChange={(e) => this.setState({opponent: e.target.value})}/>
             <button className='btn btn-outline-primary' onClick={() => this.props.socket.id !== this.state.opponent?this.invite():''}>Invite</button>
           </div>
         </div>

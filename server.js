@@ -51,6 +51,8 @@ websocket.on('connection', (socket) => {
   socket.on('turn-end', () => {
     let currentGame = games.find((game) => game.players.some((player) => player.id === socket.id))
     games = games.filter((game) => game !== currentGame)
+    if(currentGame.players.some((player) => player.total + player.round >= 100))
+      return websocket.emit('win', currentGame)
     const player = currentGame.players.find((player) => player.id === socket.id)
     const opponent = currentGame.players.find((player) => player.id !== socket.id)
     currentGame = {...currentGame, turn: opponent.id, players: [{...opponent, roll: [0,0]}, {...player, total: player.total + player.round, round: 0}]}
