@@ -13,31 +13,37 @@ import Game from './Game'
 import './index.css'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.props.connectSocket(io.connect('http://192.168.0.10:3001'))
-    this.props.createNotifier(NotificationManager)
-  }
-  render() {
-    return (
-      <div>
-        <Router>
-          <div className='container App'>
-            <Header/>
-            <NotificationContainer/>
-            <Switch>
-              <Route exact path='/ranking' render={() => <Ranking/>}/>
-              <Route exact path='/game' render={() => <Game/>}/>
-              <Route render={() => <Home/>} />
-            </Switch>
-            <Footer content='Made with ♥ by github.com/lekterable'/>
-          </div>
-        </Router>
-      </div>
-    )
-  }
+	constructor(props) {
+		super(props)
+		this.props.connectSocket(io.connect('http://localhost:3001'))
+		this.props.createNotifier(NotificationManager)
+	}
+	render() {
+		return (
+			<div>
+				<Router>
+					<div className="container App">
+						<Header />
+						<NotificationContainer />
+						<Switch>
+							<Route exact path="/ranking" render={() => <Ranking />} />
+							<Route exact path="/game" render={() => <Game />} />
+							<Route render={() => <Home />} />
+						</Switch>
+						<Footer content="Made with ♥ by github.com/lekterable" />
+					</div>
+				</Router>
+			</div>
+		)
+	}
 }
 
-const mapStateToProps = (state) => ({socket: state.socket})
-const mapDispatchToProps = (dispatch) => ({connectSocket: (socket) => dispatch(connectSocket(socket)), createNotifier: (manager) => dispatch(createNotifier(manager))})
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+const mapStateToProps = state => ({ socket: state.socket })
+const mapDispatchToProps = dispatch => ({
+	connectSocket: socket => dispatch(connectSocket(socket)),
+	createNotifier: manager => dispatch(createNotifier(manager))
+})
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(App)

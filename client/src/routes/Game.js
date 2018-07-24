@@ -1,90 +1,143 @@
 import React, { Component } from 'react'
 import { notify, endGame } from '../actions'
 import { connect } from 'react-redux'
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom'
 
 class Game extends Component {
-  constructor(props){
-    super(props)
-    if(!this.props.playing){
-      this.props.notify('error', 'You are not in any game!')
-      return this.props.history.push('/')
-    }
-  }
-  state = {
-    turn: '',
-    host: '',
-    player: {
-      total: 0,
-      round: 0,
-      roll: [0,0]
-    },
-    opponent: {
-      total: 0,
-      round: 0,
-      roll: [0,0]
-    }
-  }
-  roll = () => {
-    this.props.socket.emit('turn-roll')
-  }
-  end = () => {
-    this.props.socket.emit('turn-end')
-  }
-  componentDidMount() {
-    this.props.socket.emit('ready', (game) => {
-      if(!game && this.props.playing){
-        endGame()
-        this.props.notify('info', 'Game has ended!')
-      }
-      if(!game){
-        return this.props.history.push('/')
-      }
-      const player = game.players.find((player) => player.id === this.props.socket.id)
-      const opponent = game.players.find((player) => player.id !== this.props.socket.id)
-      this.setState({turn: game.turn, host: game.host, player: {...player}, opponent: {...opponent}})
-    })
-    this.props.socket.on('update', (game) => {
-      const player = game.players.find((player) => player.id === this.props.socket.id)
-      const opponent = game.players.find((player) => player.id !== this.props.socket.id)
-      this.setState({turn: game.turn, host: game.host, player: {...player}, opponent: {...opponent}})
-    })
-    this.props.socket.on('win', (game) => {
-      const player = game.players.find((player) => player.id === this.props.socket.id)
-      const opponent = game.players.find((player) => player.id !== this.props.socket.id)
-      this.setState({turn: game.turn, host: game.host, player: {...player}, opponent: {...opponent}})
-      console.log(game.players.find((player) => player.total + player.round >= 100))
-    })
-  }
-  componentWillUnmount() {
-    this.props.socket.off('update')
-    this.props.socket.off('win')
-  }
-  render(){
-    return (
-      <div>
-        <div className='row'>
-          <div className='col-12 col-md-6 text-center'>
-            Your total score: {this.state.player.total} <br/>
-            Your round score: {this.state.player.round}<br/>
-            Your roll: {this.state.player.roll[0]} and {this.state.player.roll[1]}
-          </div>
-          <div className='col-12 col-md-6 text-center'>
-            Opponent's total score: {this.state.opponent.total}<br/>
-            Opponent's round score: {this.state.opponent.round}<br/>
-            Opponent's roll: {this.state.opponent.roll[0]} and {this.state.opponent.roll[1]}
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-12 col-md-6 text-center'>
-            <button className='btn btn-outline-primary' disabled={this.props.socket.id !== this.state.turn} onClick={this.roll}>Roll</button>
-            <button className='btn btn-outline-primary' disabled={this.props.socket.id !== this.state.turn} onClick={this.end}>End</button>
-          </div>
-        </div>
-      </div>
-    )
-  }
+	constructor(props) {
+		super(props)
+		if (!this.props.playing) {
+			this.props.notify('error', 'You are not in any game!')
+			return this.props.history.push('/')
+		}
+	}
+
+	state = {
+		turn: '',
+		host: '',
+		player: {
+			total: 0,
+			round: 0,
+			roll: [0, 0]
+		},
+		opponent: {
+			total: 0,
+			round: 0,
+			roll: [0, 0]
+		}
+	}
+
+	roll = () => this.props.socket.emit('turn-roll')
+
+	end = () => this.props.socket.emit('turn-end')
+
+	componentDidMount() {
+		this.props.socket.emit('ready', game => {
+			if (!game && this.props.playing) {
+				endGame()
+				this.props.notify('info', 'Game has ended!')
+			}
+			if (!game) {
+				return this.props.history.push('/')
+			}
+			const player = game.players.find(
+				player => player.id === this.props.socket.id
+			)
+			const opponent = game.players.find(
+				player => player.id !== this.props.socket.id
+			)
+			this.setState({
+				turn: game.turn,
+				host: game.host,
+				player: { ...player },
+				opponent: { ...opponent }
+			})
+		})
+		this.props.socket.on('update', game => {
+			const player = game.players.find(
+				player => player.id === this.props.socket.id
+			)
+			const opponent = game.players.find(
+				player => player.id !== this.props.socket.id
+			)
+			this.setState({
+				turn: game.turn,
+				host: game.host,
+				player: { ...player },
+				opponent: { ...opponent }
+			})
+		})
+		this.props.socket.on('win', game => {
+			const player = game.players.find(
+				player => player.id === this.props.socket.id
+			)
+			const opponent = game.players.find(
+				player => player.id !== this.props.socket.id
+			)
+			this.setState({
+				turn: game.turn,
+				host: game.host,
+				player: { ...player },
+				opponent: { ...opponent }
+			})
+			console.log(
+				game.players.find(player => player.total + player.round >= 100)
+			)
+		})
+	}
+
+	componentWillUnmount() {
+		this.props.socket.off('update')
+		this.props.socket.off('win')
+	}
+
+	render() {
+		return (
+			<div>
+				<div className="row">
+					<div className="col-12 col-md-6 text-center">
+						Your total score: {this.state.player.total} <br />
+						Your round score: {this.state.player.round}
+						<br />
+						Your roll: {this.state.player.roll[0]} and{' '}
+						{this.state.player.roll[1]}
+					</div>
+					<div className="col-12 col-md-6 text-center">
+						Opponent's total score: {this.state.opponent.total}
+						<br />
+						Opponent's round score: {this.state.opponent.round}
+						<br />
+						Opponent's roll: {this.state.opponent.roll[0]} and{' '}
+						{this.state.opponent.roll[1]}
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-12 col-md-6 text-center">
+						<button
+							className="btn btn-outline-primary"
+							disabled={this.props.socket.id !== this.state.turn}
+							onClick={this.roll}
+						>
+							Roll
+						</button>
+						<button
+							className="btn btn-outline-primary"
+							disabled={this.props.socket.id !== this.state.turn}
+							onClick={this.end}
+						>
+							End
+						</button>
+					</div>
+				</div>
+			</div>
+		)
+	}
 }
-const mapStateToProps = (state) => ({...state})
-const mapDispatchToProps = (dispatch) => ({notify: (type, message, title) => dispatch(notify(type, message, title)), endGame: () => dispatch(endGame())})
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Game))
+
+export default connect(
+	state => ({ ...state }),
+	dispatch => ({
+		notify: (type, message, title) => dispatch(notify(type, message, title)),
+		endGame: () => dispatch(endGame())
+	})
+)(withRouter(Game))
