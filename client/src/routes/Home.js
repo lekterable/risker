@@ -11,6 +11,8 @@ class Home extends Component {
 	}
 
 	invite = () => {
+		if (this.props.playing)
+			return this.props.notify('info', 'You are already in a game!')
 		this.props.startGame(this.props.socket.id)
 		this.props.socket.emit(
 			'invitation',
@@ -114,9 +116,7 @@ class Home extends Component {
 						<button
 							className="btn btn-outline-primary"
 							onClick={() =>
-								this.props.socket.id !== this.state.opponent
-									? this.invite()
-									: ''
+								this.props.socket.id !== this.state.opponent && this.invite()
 							}
 						>
 							Invite
