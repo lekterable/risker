@@ -25,15 +25,9 @@ class Home extends Component {
 
 	handleDeclinedInvite = () => this.props.notify('error', 'Declined')
 
-	acceptInvite = (room, callback) => {
-		callback(true)
-		this.props.startGame(room)
-	}
+	acceptInvite = room => this.props.startGame(room)
 
-	declineInvite = (room, callback) => {
-		callback(false)
-		this.props.endGame(room)
-	}
+	declineInvite = room => this.props.endGame(room)
 
 	componentDidMount() {
 		this.props.socket.emit('info')
@@ -48,20 +42,20 @@ class Home extends Component {
 			})
 		})
 
-		this.props.socket.on('invitation', (data, callback) => {
+		this.props.socket.on('invitation', (room, callback) => {
 			if (this.props.playing) return callback(false)
 			this.props.notify(
 				'info',
 				<span>
 					<button
 						className="btn btn-primary btn-sm"
-						onClick={() => this.acceptInvite(data, callback)}
+						onClick={() => this.acceptInvite(room, callback(true))}
 					>
 						Accept
 					</button>
 					<button
 						className="btn btn-primary btn-sm"
-						onClick={() => this.declineInvite(data, callback)}
+						onClick={() => this.declineInvite(room, callback(false))}
 					>
 						Decline
 					</button>

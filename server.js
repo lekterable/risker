@@ -84,7 +84,7 @@ websocket.on('connection', socket => {
 			}
 			games = [...games, currentGame]
 		}
-		websocket.emit('update', currentGame)
+		websocket.to(currentGame.host).emit('update', currentGame)
 	})
 
 	socket.on('turn-end', () => {
@@ -93,7 +93,7 @@ websocket.on('connection', socket => {
 		)
 		games = games.filter(game => game !== currentGame)
 		if (currentGame.players.some(player => player.total + player.round >= 100))
-			return websocket.emit('win', currentGame)
+			return websocket.to(currentGame.host).emit('win', currentGame)
 		const player = currentGame.players.find(player => player.id === socket.id)
 		const opponent = currentGame.players.find(player => player.id !== socket.id)
 		currentGame = {
@@ -105,7 +105,7 @@ websocket.on('connection', socket => {
 			]
 		}
 		games = [...games, currentGame]
-		websocket.emit('update', currentGame)
+		websocket.to(currentGame.host).emit('update', currentGame)
 	})
 
 	socket.on('disconnect', () => {
