@@ -7,6 +7,9 @@ export default class extends Component {
 		return (
 			<nav className="row navbar navbar-expand-md navbar-light bg-light">
 				<NavLink className="navbar-brand" to="/">
+					<span role="img" aria-label="dice">
+						🎲
+					</span>{' '}
 					risker app
 				</NavLink>
 				<button

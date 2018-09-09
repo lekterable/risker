@@ -96,19 +96,34 @@ class Game extends Component {
 			<div>
 				<div className="row">
 					<div className="col-12 col-md-6 text-center">
-						Your total score: {this.state.player.total} <br />
-						Your round score: {this.state.player.round}
-						<br />
-						Your roll: {this.state.player.roll[0]} and{' '}
-						{this.state.player.roll[1]}
+						<div>Your total score: {this.state.player.total}</div>
+						<div>Your round score: {this.state.player.round}</div>
+						<div>
+							Your roll:
+							<span role="img" aria-label="dice">
+								🎲
+							</span>
+							{this.state.player.roll[0]} and
+							<span role="img" aria-label="dice">
+								🎲
+							</span>
+							{this.state.player.roll[1]}
+						</div>
 					</div>
 					<div className="col-12 col-md-6 text-center">
-						Opponent's total score: {this.state.opponent.total}
-						<br />
-						Opponent's round score: {this.state.opponent.round}
-						<br />
-						Opponent's roll: {this.state.opponent.roll[0]} and{' '}
-						{this.state.opponent.roll[1]}
+						<div>Opponent's total score: {this.state.opponent.total}</div>
+						<div>Opponent's round score: {this.state.opponent.round}</div>
+						<div>
+							Opponent's roll:
+							<span role="img" aria-label="dice">
+								🎲
+							</span>
+							{this.state.opponent.roll[0]} and
+							<span role="img" aria-label="dice">
+								🎲
+							</span>
+							{this.state.opponent.roll[1]}
+						</div>
 					</div>
 				</div>
 				<div className="row">
