@@ -23,7 +23,10 @@ class Home extends Component {
 
 	handleAcceptedInvite = () => this.props.notify('success', 'Accepted')
 
-	handleDeclinedInvite = () => this.props.notify('error', 'Declined')
+	handleDeclinedInvite = () => {
+		this.props.endGame()
+		return this.props.notify('error', 'Declined')
+	}
 
 	acceptInvite = room => this.props.startGame(room)
 
