@@ -76,7 +76,11 @@ class Home extends Component {
 
 	render() {
 		const players = this.state.players.map((player, index) => (
-			<li className="list-group-item text-center" key={index}>
+			<li
+				className="list-group-item text-center"
+				key={index}
+				onClick={() => this.setState({ opponent: player })}
+			>
 				{player}
 			</li>
 		))
