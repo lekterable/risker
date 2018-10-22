@@ -30,7 +30,7 @@ class Home extends Component {
 
 	acceptInvite = room => this.props.startGame(room)
 
-	declineInvite = room => this.props.endGame(room)
+	declineInvite = () => this.props.endGame()
 
 	componentDidMount() {
 		this.props.socket.emit('info')
@@ -134,6 +134,6 @@ export default connect(
 	dispatch => ({
 		startGame: room => dispatch(startGame(room)),
 		notify: (type, message, title) => dispatch(notify(type, message, title)),
-		endGame: room => dispatch(endGame(room))
+		endGame: () => dispatch(endGame())
 	})
 )(withRouter(Home))
