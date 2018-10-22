@@ -34,7 +34,7 @@ class Game extends Component {
 	componentDidMount() {
 		this.props.socket.emit('ready', game => {
 			if (!game && this.props.playing) {
-				endGame()
+				this.props.endGame()
 				this.props.notify('info', 'Game has ended!')
 			}
 			if (!game) {
