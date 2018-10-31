@@ -10,28 +10,6 @@ class Home extends Component {
 		opponent: ''
 	}
 
-	invite = () => {
-		if (this.props.playing)
-			return this.props.notify('info', 'You are already in a game!')
-		this.props.startGame(this.props.socket.id)
-		this.props.socket.emit(
-			'invitation',
-			this.state.opponent,
-			res => (res ? this.handleAcceptedInvite() : this.handleDeclinedInvite())
-		)
-	}
-
-	handleAcceptedInvite = () => this.props.notify('success', 'Accepted')
-
-	handleDeclinedInvite = () => {
-		this.props.endGame()
-		return this.props.notify('error', 'Declined')
-	}
-
-	acceptInvite = room => this.props.startGame(room)
-
-	declineInvite = () => this.props.endGame()
-
 	componentDidMount() {
 		this.props.socket.emit('info')
 
@@ -73,6 +51,28 @@ class Home extends Component {
 		this.props.socket.off('info')
 		this.props.socket.off('invitation')
 	}
+
+	invite = () => {
+		if (this.props.playing)
+			return this.props.notify('info', 'You are already in a game!')
+		this.props.startGame(this.props.socket.id)
+		this.props.socket.emit(
+			'invitation',
+			this.state.opponent,
+			res => (res ? this.handleAcceptedInvite() : this.handleDeclinedInvite())
+		)
+	}
+
+	handleAcceptedInvite = () => this.props.notify('success', 'Accepted')
+
+	handleDeclinedInvite = () => {
+		this.props.endGame()
+		return this.props.notify('error', 'Declined')
+	}
+
+	acceptInvite = room => this.props.startGame(room)
+
+	declineInvite = () => this.props.endGame()
 
 	render() {
 		const players = this.state.players.map((player, index) => (

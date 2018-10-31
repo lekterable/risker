@@ -80,9 +80,13 @@ class Game extends Component {
 				player: { ...player },
 				opponent: { ...opponent }
 			})
-			console.log(
-				game.players.find(player => player.total + player.round >= 100)
-			)
+
+			if (game.turn === this.props.socket.id)
+				this.props.notify('success', 'You win!')
+			else this.props.notify('error', 'You lose!')
+
+			this.props.endGame()
+			return this.props.history.push('/')
 		})
 	}
 
