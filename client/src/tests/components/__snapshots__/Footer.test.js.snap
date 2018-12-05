@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should match snapshot 1`] = `
+<footer
+  className="footer text-center"
+>
+  <div
+    className="container"
+  >
+    <span
+      className="text-muted"
+    />
+  </div>
+</footer>
+`;
