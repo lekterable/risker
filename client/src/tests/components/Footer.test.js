@@ -8,4 +8,10 @@ describe('Footer', () => {
 
 		expect(wrapper).toMatchSnapshot()
 	})
+
+	it('should render passed copyright', () => {
+		const wrapper = shallow(<Footer content="copyright" />)
+
+		expect(wrapper.find('span').text()).toEqual('copyright')
+	})
 })
