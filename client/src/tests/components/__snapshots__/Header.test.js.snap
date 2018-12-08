@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should match snapshot 1`] = `
+<nav
+  className="row navbar navbar-expand-md navbar-light bg-light"
+>
+  <NavLink
+    activeClassName="active"
+    ariaCurrent="true"
+    className="navbar-brand"
+    to="/"
+  >
+    <span
+      aria-label="dice"
+      role="img"
+    >
+      🎲
+    </span>
+     
+    risker app
+  </NavLink>
+  <button
+    aria-controls="navbarColor03"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    className="navbar-toggler"
+    data-target="#navbarColor03"
+    data-toggle="collapse"
+    type="button"
+  >
+    <span
+      className="navbar-toggler-icon"
+    />
+  </button>
+  <div
+    className="collapse navbar-collapse"
+    id="navbarColor03"
+  >
+    <ul
+      className="navbar-nav"
+    >
+      <li
+        className="nav-item"
+      >
+        <NavLink
+          activeClassName="active"
+          ariaCurrent="true"
+          className="nav-link"
+          exact={true}
+          to="/game"
+        >
+          <span
+            aria-label="loupe"
+            role="img"
+          >
+            🕹
+          </span>
+           
+          game
+        </NavLink>
+      </li>
+      <li
+        className="nav-item"
+      >
+        <NavLink
+          activeClassName="active"
+          ariaCurrent="true"
+          className="nav-link"
+          exact={true}
+          to="/ranking"
+        >
+          <span
+            aria-label="plus"
+            role="img"
+          >
+            📈
+          </span>
+           
+          ranking
+        </NavLink>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;
