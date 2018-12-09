@@ -56,10 +56,8 @@ class Home extends Component {
 		if (this.props.playing)
 			return this.props.notify('info', 'You are already in a game!')
 		this.props.startGame(this.props.socket.id)
-		this.props.socket.emit(
-			'invitation',
-			this.state.opponent,
-			res => (res ? this.handleAcceptedInvite() : this.handleDeclinedInvite())
+		this.props.socket.emit('invitation', this.state.opponent, res =>
+			res ? this.handleAcceptedInvite() : this.handleDeclinedInvite()
 		)
 	}
 
@@ -84,6 +82,7 @@ class Home extends Component {
 				{player}
 			</li>
 		))
+
 		return (
 			<div className="main">
 				<div className="form-group row">
@@ -92,7 +91,7 @@ class Home extends Component {
 					</label>
 					<div className="col-9 col-md-5 col-lg-3">
 						<input
-							className="form-control text-center"
+							className="form-control text-center player-id"
 							type="text"
 							readOnly
 							value={this.props.socket.id || ''}
@@ -108,7 +107,7 @@ class Home extends Component {
 				<div className="invite-form row">
 					<div className="col-12 text-center">
 						<input
-							className="form-control text-center col-8 offset-2 col-md-4 offset-md-4"
+							className="form-control text-center col-8 offset-2 col-md-4 offset-md-4 opponent-id"
 							placeholder="Insert ID"
 							type="text"
 							value={this.state.opponent}
@@ -117,7 +116,9 @@ class Home extends Component {
 						<button
 							className="btn btn-outline-primary"
 							onClick={() =>
-								this.props.socket.id !== this.state.opponent && this.invite()
+								this.state.opponent &&
+								this.props.socket.id !== this.state.opponent &&
+								this.invite()
 							}
 						>
 							Invite
@@ -128,6 +129,8 @@ class Home extends Component {
 		)
 	}
 }
+
+export { Home }
 
 export default connect(
 	state => ({ ...state }),
