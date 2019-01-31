@@ -49,10 +49,7 @@ websocket.on('connection', socket => {
 	})
 
 	socket.on('turn-roll', () => {
-		const dices = [
-			Math.floor(Math.random() * 6) + 1,
-			Math.floor(Math.random() * 6) + 1
-		]
+		const dices = [50, Math.floor(Math.random() * 6) + 1]
 		let currentGame = games.find(game =>
 			game.players.some(player => player.id === socket.id)
 		)
@@ -109,9 +106,18 @@ websocket.on('connection', socket => {
 	})
 
 	socket.on('disconnect', () => {
-		games = games.filter(
-			game => !game.players.some(player => player.id === socket.id)
+		let currentGame = games.find(game =>
+			game.players.some(player => player.id === socket.id)
 		)
+		if (currentGame) {
+			const opponent = currentGame.players.find(
+				player => player.id !== socket.id
+			)
+			games = games.filter(game => game !== currentGame)
+			websocket
+				.to(opponent.id)
+				.emit('win', { ...currentGame, turn: opponent.id })
+		}
 		players = players.filter(player => player != socket.id)
 		socket.broadcast.emit('info', { players })
 	})
