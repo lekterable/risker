@@ -3,15 +3,15 @@ import { shallow } from 'enzyme'
 import Footer from '../../components/Footer'
 
 describe('Footer', () => {
-	it('should match snapshot', () => {
-		const wrapper = shallow(<Footer />)
+  it('should match snapshot', () => {
+    const wrapper = shallow(<Footer />)
 
-		expect(wrapper).toMatchSnapshot()
-	})
+    expect(wrapper).toMatchSnapshot()
+  })
 
-	it('should render passed copyright', () => {
-		const wrapper = shallow(<Footer content="copyright" />)
+  it('should render passed copyright', () => {
+    const wrapper = shallow(<Footer content="copyright" />)
 
-		expect(wrapper.find('span').text()).toEqual('copyright')
-	})
+    expect(wrapper.find('span').text()).toEqual('copyright')
+  })
 })
